@@ -1,12 +1,17 @@
 package ru.job4j.forum.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "posts")
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String desc;
+    private String description;
     private LocalDateTime created;
 
     public static Post of(String name) {
@@ -32,11 +37,11 @@ public class Post {
     }
 
     public String getDescription() {
-        return desc;
+        return description;
     }
 
     public void setDescription(String description) {
-        this.desc = description;
+        this.description = description;
     }
 
     public LocalDateTime getCreated() {
@@ -56,14 +61,11 @@ public class Post {
             return false;
         }
         Post post = (Post) o;
-        return id == post.id
-                && Objects.equals(name, post.name)
-                && Objects.equals(desc, post.desc)
-                && Objects.equals(created, post.created);
+        return id == post.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, created);
+        return Objects.hash(id);
     }
 }
