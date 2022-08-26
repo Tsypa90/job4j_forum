@@ -1,13 +1,13 @@
 package ru.job4j.forum.model;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Post {
     private int id;
     private String name;
     private String desc;
-    private Calendar created;
+    private LocalDateTime created;
 
     public static Post of(String name) {
         Post post = new Post();
@@ -39,11 +39,11 @@ public class Post {
         this.desc = description;
     }
 
-    public Calendar getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Calendar created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
