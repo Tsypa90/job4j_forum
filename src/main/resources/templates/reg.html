@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -27,8 +27,6 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" th:href="@{/index}">Все посты</a>
-                <a class="nav-item nav-link" th:if="${user.username != 'Guest'}" th:href="@{/add}">Добавить пост</a>
-                <a class="nav-item nav-link" th:if="${user.username == 'Guest'}" th:href="@{/reg}">Регистрация</a>
                 <a class="nav-item nav-link" th:if="${user.username == 'Guest'}" th:href="@{/login}">
                     <span th:text="${user.username}"></span>
                     <span> | Войти</span>
@@ -39,43 +37,26 @@
             </div>
         </div>
     </nav>
-    <div class="row">
-        <tr>
-            <th scope="col"><a th:href="@{|/update/${post.id}|}" method="GET">
-                <button type="submit" class="btn btn-primary">Отредактировать</button></a></th>
-            <th scope="col"><form th:action="@{|/delete/${post.id}|}" method="POST">
-                <button type="submit" class="btn btn-primary">Удалить</button></form></th>
-            <th scope="col"><a th:href="@{|/addmsg/${post.id}|}" method="GET">
-                <button type="submit" class="btn btn-primary">Ответить</button></a></th>
-        </tr>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Тема</th>
-                <th scope="col">Описание</th>
-            </tr>
-            </thead>
-            <tbody>
-            <td th:hidden="${post.id}"></td>
-            <td th:hidden="${post.created}"></td>
-            <td th:text="${post.name}"></td>
-            <td th:text="${post.description}"></td>
-            </td>
-            </tbody>
-        </table>
+    <div class="row pt-3">
+        <div class="card" style="width: 100%">
+            <div class="card-header">
+                Регистрация пользователя
+            </div>
+            <div class="card-body">
+                <div th:if="${usernameError != null}" class="alert alert-danger" role="alert" th:text="${usernameError}">
+                </div>
+                <form th:action="@{reg}" method="POST">
+                    <div class="form-group">
+                        <label for="username">Логин</label>
+                        <input type="text" class="form-control" name="username" id="username" required>
+                        <label for="password">Пароль</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+                </form>
+            </div>
+        </div>
     </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Ответ</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="msg: ${msgs}">
-            <td th:text="${{msg.message}}"></td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>

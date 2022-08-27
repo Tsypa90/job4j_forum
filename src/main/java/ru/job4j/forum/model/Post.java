@@ -1,7 +1,11 @@
 package ru.job4j.forum.model;
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +17,8 @@ public class Post {
     private String name;
     private String description;
     private LocalDateTime created;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Message> messages = new ArrayList<>();
 
     public static Post of(String name) {
         Post post = new Post();
@@ -50,6 +56,18 @@ public class Post {
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    public void addMsg(Message message) {
+        messages.add(message);
     }
 
     @Override

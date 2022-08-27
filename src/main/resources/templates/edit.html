@@ -27,7 +27,15 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link" th:href="@{/index}">Все посты</a>
-        <a class="nav-item nav-link active" th:href="@{/index}">Добавить пост</a>
+        <a class="nav-item nav-link" th:if="${user.username != 'Guest'}" th:href="@{/add}">Добавить пост</a>
+        <a class="nav-item nav-link" th:if="${user.username == 'Guest'}" th:href="@{/reg}">Регистрация</a>
+        <a class="nav-item nav-link" th:if="${user.username == 'Guest'}" th:href="@{/login}">
+          <span th:text="${user.username}"></span>
+          <span> | Войти</span>
+        </a>
+        <a class="nav-item nav-link" th:if="${user.username!= 'Guest'}" th:href="@{/logout}">
+          <span th:text="${user.username}"></span>
+          <span> | Выйти</span></a>
       </div>
     </div>
   </nav>

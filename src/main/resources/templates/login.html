@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -26,33 +26,26 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/index}">Все посты</a>
-                <a class="nav-item nav-link active" th:if="${user.username != 'Guest'}" th:href="@{/add}">Добавить пост</a>
-                <a class="nav-item nav-link" th:if="${user.username == 'Guest'}" th:href="@{/reg}">Регистрация</a>
-                <a class="nav-item nav-link" th:if="${user.username == 'Guest'}" th:href="@{/login}">
-                    <span th:text="${user.username}"></span>
-                    <span> | Войти</span>
-                </a>
-                <a class="nav-item nav-link" th:if="${user.username!= 'Guest'}" th:href="@{/logout}">
-                    <span th:text="${user.username}"></span>
-                    <span> | Выйти</span></a>
+                <a class="nav-item nav-link active" th:href="@{/index}">Все посты</a>
+                <a class="nav-item nav-link" th:href="@{/reg}">Регистрация</a>
             </div>
         </div>
     </nav>
     <div class="row pt-3">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Новый пост
+                Авторизация
             </div>
             <div class="card-body">
-                <form th:action="@{/add}" method="POST">
+                <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+                <form th:action="@{/login}" method="POST">
                     <div class="form-group">
-                        <label for="name">Тема</label>
-                        <input type="text" class="form-control" name="name" id="name">
-                        <label for="description">Описание</label>
-                        <input type="text" class="form-control" name="description" id="description">
+                        <label for="username">Логин</label>
+                        <input type="text" class="form-control" name="username" id="username">
+                        <label for="password">Пароль</label>
+                        <input type="password" class="form-control" name="password" id="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Опубликовать</button>
+                    <button type="submit" class="btn btn-primary">Войти</button>
                 </form>
             </div>
         </div>
