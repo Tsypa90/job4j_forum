@@ -13,5 +13,6 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     @EntityGraph(attributePaths = "messages")
     List<Post> findByOrderByIdAsc();
 
+    @EntityGraph(attributePaths = "messages")
     Post findById(int id);
 }

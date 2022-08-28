@@ -15,9 +15,10 @@ public class PostService {
         this.store = store;
     }
 
-    public void savePost(Post post) {
+    public Post savePost(Post post) {
         post.setCreated(LocalDateTime.now());
         store.save(post);
+        return post;
     }
 
     public List<Post> getAll() {

@@ -20,9 +20,10 @@ public class Post {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Message> messages = new ArrayList<>();
 
-    public static Post of(String name) {
+    public static Post of(String name, String description) {
         Post post = new Post();
         post.name = name;
+        post.description = description;
         return post;
     }
 

@@ -1,13 +1,13 @@
 package ru.job4j.forum.control;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.job4j.forum.model.Post;
+import ru.job4j.forum.service.PostService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -17,7 +17,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class PostControlTest {
+class PostControlGetTest {
+    @Autowired
+    private PostService service;
     @Autowired
     private MockMvc mockMvc;
 
@@ -34,7 +36,8 @@ class PostControlTest {
     @Test
     @WithMockUser
     public void whenRequestGetPostsPostIdAndGetDefault() throws Exception {
-        this.mockMvc.perform(get("/posts/{postId}", "9"))
+        Post post = service.savePost(Post.of("test", "test"));
+        this.mockMvc.perform(get("/posts/{postId}", post.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("post"));
@@ -43,7 +46,8 @@ class PostControlTest {
     @Test
     @WithMockUser
     public void whenRequestGetUpdatePostIdAndGetDefault() throws Exception {
-        this.mockMvc.perform(get("/update/{postId}", 9))
+        Post post = service.savePost(Post.of("test", "test"));
+        this.mockMvc.perform(get("/update/{postId}", post.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("edit"));
@@ -52,7 +56,8 @@ class PostControlTest {
     @Test
     @WithMockUser
     public void whenRequestGetAddMsgPostIdAdnGetDefault() throws Exception {
-        this.mockMvc.perform(get("/addmsg/{postId}", 9))
+        Post post = service.savePost(Post.of("test", "test"));
+        this.mockMvc.perform(get("/addmsg/{postId}", post.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("addmsg"));
