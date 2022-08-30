@@ -29,10 +29,11 @@ public class RegistrationControl {
     }
 
     @PostMapping("/reg")
-    public String reg(@ModelAttribute("userForm") User user, Model model) {
+    public String reg(@ModelAttribute User user, Model model) {
         boolean rsl = service.save(user);
         if (!rsl) {
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
+            model.addAttribute("user", User.of("Guest"));
             return "reg";
         }
         return "redirect:/login";
